@@ -7,7 +7,10 @@ const prisma = new PrismaClient();
 const app = express();
 app.use(cors());
 
-app.get('/', async (req: Request, res: Response) => {});
+app.get('/tournaments', async (req: Request, res: Response) => {
+  const tournaments = await prisma.tournament.findMany();
+  res.send({ success: true, tournaments });
+});
 
 app.listen(3000, () => {
   console.log('Application started on port 3000!');
