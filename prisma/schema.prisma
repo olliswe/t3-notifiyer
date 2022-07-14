@@ -1,0 +1,22 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url  = env("DATABASE_URL")
+}
+
+model Tournament {
+  id             Int      @id @default(autoincrement())
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  tournamentDate String
+  t3Id           String
+  signupDisabled Boolean
+  location       String
+  seats          String
+
+    @@unique([t3Id])
+
+}
