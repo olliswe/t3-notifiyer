@@ -2,3 +2,4 @@ node_modules
 .idea
 .env
 prisma/dev.db
+sendgrid.env

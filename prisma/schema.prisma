@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url  = env("DATABASE_URL")
+  url      = env("DATABASE_URL")
 }
 
 model Tournament {
@@ -12,18 +12,15 @@ model Tournament {
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
   tournamentDate String
-  t3Id           String
+  t3Id           String   @unique
   signupDisabled Boolean
   location       String
   seats          String
-
-    @@unique([t3Id])
-
 }
 
 model User {
-  id             Int      @id @default(autoincrement())
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-  email          String   @unique
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  email     String   @unique
 }

@@ -2,11 +2,14 @@ import express, { Request, Response } from 'express';
 import cors from 'cors';
 import { PrismaClient } from '@prisma/client';
 import * as EmailValidator from 'email-validator';
+import { sendSignupMail } from './emails';
+import bodyParser from 'body-parser';
 
 const prisma = new PrismaClient();
 
 const app = express();
 app.use(cors());
+app.use(bodyParser.json());
 
 app.get('/tournaments', async (req: Request, res: Response) => {
   const tournaments = await prisma.tournament.findMany();
@@ -14,7 +17,7 @@ app.get('/tournaments', async (req: Request, res: Response) => {
 });
 
 app.post('/signup-email', async (req, res) => {
-  const email = req.body.email;
+  const email = req.body?.email;
   if (!email) {
     res.status(403).send({ error: 'Email must be provided!' });
     return;
@@ -23,12 +26,17 @@ app.post('/signup-email', async (req, res) => {
     res.status(403).send({ error: 'Email must be of valid format!' });
     return;
   }
-  await prisma.user.create({
-    data: {
-      email: email,
-    },
-  });
-  res.status(201).send();
+  try {
+    await prisma.user.create({
+      data: {
+        email: email,
+      },
+    });
+    sendSignupMail({ email });
+    res.status(201).send();
+  } catch (e) {
+    res.status(500).send({ error: 'Unable to save email!' });
+  }
 });
 
 app.listen(3000, () => {

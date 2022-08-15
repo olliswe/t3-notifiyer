@@ -1,9 +1,16 @@
 import { PrismaClient } from '@prisma/client';
-import { getT3TournamentData } from './utils';
+import { getT3TournamentData } from '../utils';
+import { newTournamentPosted } from '../emails';
 
 const prisma = new PrismaClient();
 
+const getUserEmails = async () => {
+  const users = await prisma.user.findMany();
+  return users.map((u) => u.email);
+};
+
 const saveTournaments = async () => {
+  const newTournaments = [];
   try {
     const { data, success } = await getT3TournamentData();
     if (success && data) {
@@ -25,18 +32,23 @@ const saveTournaments = async () => {
               seats: tournament.seats,
             },
           });
-          return;
+        } else {
+          const newTournament = await prisma.tournament.create({
+            data: {
+              t3Id: tournament.tournamentId,
+              tournamentDate: tournament.date,
+              signupDisabled: tournament.isDisabled,
+              location: tournament.location,
+              seats: tournament.seats,
+            },
+          });
+          newTournaments.push(newTournament);
         }
-        await prisma.tournament.create({
-          data: {
-            t3Id: tournament.tournamentId,
-            tournamentDate: tournament.date,
-            signupDisabled: tournament.isDisabled,
-            location: tournament.location,
-            seats: tournament.seats,
-          },
-        });
       }
+    }
+    if (newTournaments.length > 0) {
+      const emails = await getUserEmails();
+      newTournamentPosted({ emails, t3Ids: newTournaments.map((t) => t.t3Id) });
     }
   } catch (error) {
     console.log('Error: ', error);
