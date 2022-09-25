@@ -27,7 +27,7 @@ const saveTournaments = async () => {
             },
             data: {
               name: tournament.name,
-              tournamentDate: tournament.date,
+              tournamentDate: new Date(tournament.date).toISOString(),
               signupDisabled: tournament.isDisabled,
               location: tournament.location,
               seats: tournament.seats,
@@ -38,7 +38,7 @@ const saveTournaments = async () => {
             data: {
               name: tournament.name,
               t3Id: tournament.tournamentId,
-              tournamentDate: tournament.date,
+              tournamentDate: new Date(tournament.date).toISOString(),
               signupDisabled: tournament.isDisabled,
               location: tournament.location,
               seats: tournament.seats,
