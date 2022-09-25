@@ -39,7 +39,7 @@ export const getT3TournamentData = async () => {
         const tournamentId = href?.replace('/t3_tournament.php?tid=', '');
         return {
           date: stripHtml(entry.Date),
-          tournament: stripHtml(entry.Tournament),
+          name: stripHtml(entry.Tournament),
           tournamentId,
           isDisabled,
           location: stripHtml(entry.Location),

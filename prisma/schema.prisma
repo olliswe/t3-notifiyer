@@ -16,6 +16,7 @@ model Tournament {
   signupDisabled Boolean
   location       String
   seats          String
+  name           String @default("")
 }
 
 model User {

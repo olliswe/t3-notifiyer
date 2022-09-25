@@ -26,6 +26,7 @@ const saveTournaments = async () => {
               id: existingTournament.id,
             },
             data: {
+              name: tournament.name,
               tournamentDate: tournament.date,
               signupDisabled: tournament.isDisabled,
               location: tournament.location,
@@ -35,6 +36,7 @@ const saveTournaments = async () => {
         } else {
           const newTournament = await prisma.tournament.create({
             data: {
+              name: tournament.name,
               t3Id: tournament.tournamentId,
               tournamentDate: tournament.date,
               signupDisabled: tournament.isDisabled,
