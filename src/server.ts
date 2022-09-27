@@ -43,7 +43,8 @@ app.post('/signup-email', async (req, res) => {
     sendSignupMail({ email });
     res.status(201).send({ success: true });
   } catch (e) {
-    res.status(500).send({ error: 'Unable to save email!', success: false });
+    const msg = (e as any)?.code === 'P2002' ? 'Email already exists!' : 'Something went wrong!';
+    res.status(500).send({ error: msg, success: false });
   }
 });
 
