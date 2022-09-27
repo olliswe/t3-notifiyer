@@ -41,9 +41,9 @@ app.post('/signup-email', async (req, res) => {
       },
     });
     sendSignupMail({ email });
-    res.status(201).send();
+    res.status(201).send({ success: true });
   } catch (e) {
-    res.status(500).send({ error: 'Unable to save email!' });
+    res.status(500).send({ error: 'Unable to save email!', success: false });
   }
 });
 
