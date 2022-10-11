@@ -50,7 +50,7 @@ const saveTournaments = async () => {
     }
     if (newTournaments.length > 0) {
       const emails = await getUserEmails();
-      newTournamentPosted({ emails, t3Ids: newTournaments.map((t) => t.t3Id) });
+      newTournamentPosted({ emails, newTournaments });
     }
   } catch (error) {
     console.log('Error: ', error);
