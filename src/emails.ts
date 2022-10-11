@@ -1,5 +1,6 @@
 import sgMail from '@sendgrid/mail';
 import { SENDER_EMAIL } from './constants';
+import { CONFIRMATION_EMAIL } from './email-templates/confirmation';
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY || '');
 
@@ -9,7 +10,7 @@ export const sendSignupMail = ({ email }: { email: string }) => {
     from: SENDER_EMAIL, // Change to your verified sender
     subject: 'Welcome to T3 Notifier',
     text: 'Welcome!!',
-    html: '<strong>Welcome!!</strong>',
+    html: CONFIRMATION_EMAIL,
   };
   sgMail
     .send(msg)
