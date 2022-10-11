@@ -48,6 +48,6 @@ app.post('/signup-email', async (req, res) => {
   }
 });
 
-app.listen(3000, () => {
+app.listen(process.env.PORT || 5000, () => {
   console.log('Application started on port 3000!');
 });
