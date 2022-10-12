@@ -27,11 +27,11 @@ app.get('/tournaments', async (req: Request, res: Response) => {
 app.post('/signup-email', async (req, res) => {
   const email = req.body?.email;
   if (!email) {
-    res.status(403).send({ error: 'Email must be provided!' });
+    res.status(403).send({ error: 'Email muss angegeben werden!' });
     return;
   }
   if (!EmailValidator.validate(email)) {
-    res.status(403).send({ error: 'Email must be of valid format!' });
+    res.status(403).send({ error: 'Die Email muss ein gültiges Format haben!' });
     return;
   }
   try {
@@ -43,7 +43,7 @@ app.post('/signup-email', async (req, res) => {
     sendSignupMail({ email });
     res.status(201).send({ success: true });
   } catch (e) {
-    const msg = (e as any)?.code === 'P2002' ? 'Email already exists!' : 'Something went wrong!';
+    const msg = (e as any)?.code === 'P2002' ? 'Email ist bereits im System!' : 'Etwas ist schief gelaufen!';
     res.status(500).send({ error: msg, success: false });
   }
 });
