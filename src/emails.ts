@@ -13,8 +13,8 @@ export const sendSignupMail = ({ email }: { email: string }) => {
   const msg = {
     to: email, // Change to your recipient
     from: SENDER_EMAIL, // Change to your verified sender
-    subject: 'Welcome to T3 Notifier',
-    text: 'Welcome!!',
+    subject: 'Wilkommen zum T3-Notifier',
+    text: 'Wilkommen zum T3-Notifier!',
     html: CONFIRMATION_EMAIL,
   };
   sgMail
@@ -32,7 +32,7 @@ export const newTournamentPosted = ({ emails, newTournaments }: { emails: string
     const msg = {
       to: email, // Change to your recipient
       from: SENDER_EMAIL, // Change to your verified sender
-      subject: 'New Tournaments posted',
+      subject: 'Es gibt neue 40k Turniere auf T3!',
       dynamicTemplateData: {
         tournament: newTournaments.map((t) => ({
           name: t.name,
